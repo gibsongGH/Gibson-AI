@@ -3,16 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gibson AI</title>
-  <meta name="description" content="Machine learning systems that ship. Projects, consulting, and insights by Greg Gibson." />
+  <title>Greg Gibson | Gibson AI</title>
+  <meta name="description" content="Greg Gibson — independent ML consultant. Reproducible pipelines, disciplined experimentation, and decision-focused evaluation." />
+
+  <!-- Open Graph (nice previews on LinkedIn/iMessage) -->
+  <meta property="og:title" content="Greg Gibson | Gibson AI" />
+  <meta property="og:description" content="Practical machine learning systems that ship: pipelines, MLflow discipline, and decision-focused evaluation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gibson-ai.com" />
+  <meta property="og:image" content="https://gibson-ai.com/assets/images/og.png" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top">Gibson AI</a>
-      <nav class="nav">
-        <a href="#projects">Projects</a>
+      <a class="brand" href="#top" aria-label="Gibson AI home">Gibson AI</a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#projects">Project</a>
         <a href="#consulting">Consulting</a>
         <a href="#insights">Insights</a>
         <a href="#contact">Contact</a>
@@ -21,118 +31,203 @@
   </header>
 
   <main id="top">
+    <!-- HERO -->
     <section class="hero">
-      <div class="container hero-inner">
-        <h1>Machine Learning Systems That Ship</h1>
-        <p class="lede">
-          I design reproducible ML pipelines, structured experimentation, and practical evaluation strategies
-          that turn data into decisions.
-        </p>
-        <div class="cta">
-          <a class="button primary" href="#projects">View Projects</a>
-          <a class="button" href="#contact">Work With Me</a>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="kicker">Independent ML Consultant</p>
+          <h1>Greg Gibson</h1>
+          <p class="hero-subhead">
+            I build <strong>practical machine learning systems that ship</strong> — reproducible pipelines,
+            disciplined experimentation, and decision-focused evaluation that turns data into decisions.
+          </p>
+
+          <div class="cta">
+            <a class="button primary" href="#contact">Work with me</a>
+            <a class="button" href="#projects">See CardioSentinel</a>
+          </div>
+
+          <ul class="hero-badges" aria-label="Focus areas">
+            <li>Pipeline architecture</li>
+            <li>MLflow experiment discipline</li>
+            <li>Thresholding & tradeoffs</li>
+            <li>Leakage-aware features</li>
+          </ul>
+
+          <div class="social-row" aria-label="Social links">
+            <a class="textlink" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <span class="dot">•</span>
+            <a class="textlink" href="https://github.com/gibsongGH" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
         </div>
-        <p class="micro">
-          Focus: pipeline architecture, MLflow experiment discipline, thresholding for real-world tradeoffs.
-        </p>
+
+        <div class="hero-photo">
+          <img
+            src="assets/images/headshot.jpg"
+            alt="Professional headshot of Greg Gibson"
+            onerror="this.style.display='none'; document.getElementById('headshotFallback').style.display='block';"
+          />
+          <div id="headshotFallback" class="headshot-fallback" style="display:none;">
+            <p><strong>Add your headshot</strong></p>
+            <p class="muted">Place it at <code>assets/images/headshot.jpg</code></p>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- PROJECT -->
     <section id="projects" class="section">
       <div class="container">
-        <h2>Flagship Project</h2>
+        <div class="section-head">
+          <h2>Featured project</h2>
+          <p class="lede">A flagship ML build that emphasizes structure, evaluation, and reproducibility.</p>
+        </div>
 
         <article class="card">
           <div class="card-head">
-            <h3>CardioSentinel</h3>
+            <div>
+              <h3>CardioSentinel</h3>
+              <p class="muted tight">Heart attack risk modeling system built for real-world tradeoffs.</p>
+            </div>
             <span class="pill">ML • Evaluation • Reproducibility</span>
           </div>
+
           <p>
-            End-to-end heart-attack risk modeling system comparing linear models and boosted trees using
-            structured feature engineering, MLflow tracking, and precision–recall driven threshold tuning.
+            An end-to-end modeling workflow exploring precision–recall tradeoffs under class imbalance
+            (~36% positive). The goal wasn’t to “chase accuracy” — it was to choose thresholds intentionally
+            and compare approaches with clear, repeatable experiments.
           </p>
-          <ul class="bullets">
-            <li>Config-driven pipelines (safe vs learned feature separation)</li>
-            <li>Experiment tracking and artifact logging with MLflow</li>
-            <li>Decision-focused evaluation (precision floors, recall tradeoffs)</li>
-          </ul>
-          <div class="links">
-            <a class="textlink" href="https://github.com/" target="_blank" rel="noreferrer">GitHub Repo →</a>
-            <a class="textlink" href="#contact">Discuss a similar system →</a>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <h4>What I built</h4>
+              <ul class="bullets">
+                <li>Config-driven pipeline factory</li>
+                <li>Safe vs learned feature separation</li>
+                <li>MLflow experiment tracking & artifacts</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h4>What it demonstrates</h4>
+              <ul class="bullets">
+                <li>Decision-focused evaluation (precision floors)</li>
+                <li>Threshold tuning with explicit tradeoffs</li>
+                <li>Comparative modeling (LR vs GBDT)</li>
+              </ul>
+            </div>
           </div>
+
+          <div class="links">
+            <a class="button" href="https://github.com/gibsongGH/CardioSentinel" target="_blank" rel="noreferrer">GitHub Repo</a>
+            <a class="button ghost" href="#contact">Build something similar</a>
+          </div>
+
           <p class="note">
-            Tip: replace the GitHub link above with your CardioSentinel repo URL.
+            Quick win: replace the GitHub link above with your CardioSentinel repo URL.
           </p>
         </article>
       </div>
     </section>
 
+    <!-- CONSULTING -->
     <section id="consulting" class="section alt">
       <div class="container">
-        <h2>Consulting</h2>
-        <p class="lede">
-          I help teams move from “we trained a model” to “we have a reliable ML system.”
-        </p>
+        <div class="section-head">
+          <h2>Consulting</h2>
+          <p class="lede">I help teams move from “we trained a model” to “we have a reliable ML system.”</p>
+        </div>
 
-        <div class="grid">
+        <div class="grid-3">
           <div class="card">
-            <h3>Experiment Frameworks</h3>
-            <p>Set up clean MLflow tracking, metrics, artifacts, and model comparison that actually guides decisions.</p>
+            <h3>Experiment frameworks</h3>
+            <p>
+              Clean experiment structure, MLflow tracking, metrics that match reality, and artifacts you can trust.
+            </p>
           </div>
           <div class="card">
-            <h3>Pipelines & Reproducibility</h3>
-            <p>Turn notebooks into config-driven pipelines with disciplined preprocessing and feature governance.</p>
+            <h3>Pipelines & reproducibility</h3>
+            <p>
+              Turn notebooks into disciplined pipelines with feature governance, leakage checks, and repeatable runs.
+            </p>
           </div>
           <div class="card">
-            <h3>Evaluation Strategy</h3>
-            <p>Precision/recall, thresholds, calibration, and cost-aware tradeoffs tailored to your business context.</p>
+            <h3>Evaluation strategy</h3>
+            <p>
+              Precision/recall tradeoffs, thresholding, calibration, and cost-aware evaluation for your business context.
+            </p>
           </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            <strong>Engagement style:</strong> short diagnostic + clear plan, then implementation support as needed.
+            You’ll leave with a pipeline you can maintain — not a mysterious model.
+          </p>
         </div>
       </div>
     </section>
 
+    <!-- INSIGHTS -->
     <section id="insights" class="section">
       <div class="container">
-        <h2>Insights</h2>
-        <p class="lede">
-          Curated write-ups based on real build-and-debug work (short, practical, and reusable).
-        </p>
+        <div class="section-head">
+          <h2>Insights</h2>
+          <p class="lede">
+            Curated write-ups based on real build-and-debug work. Practical, reusable, and occasionally fun.
+          </p>
+        </div>
 
-        <div class="grid">
+        <div class="grid-3">
           <div class="card">
-            <h3>Thresholds: why “lower can be better”</h3>
-            <p>How changing the decision threshold can improve recall when missing positives is expensive.</p>
+            <h3>Thresholds: when “lower” is better</h3>
+            <p>
+              Why shifting the decision threshold can improve recall when missing positives is expensive.
+            </p>
           </div>
           <div class="card">
             <h3>Pipelines vs notebooks</h3>
-            <p>When to keep exploration flexible, and when to lock a workflow into a repeatable pipeline.</p>
+            <p>
+              Where exploration belongs, and where disciplined structure prevents silent failure.
+            </p>
           </div>
           <div class="card">
-            <h3>Safe vs learned features</h3>
-            <p>How to avoid leakage and keep feature engineering honest during train/test splits.</p>
+            <h3>Keeping ML honest</h3>
+            <p>
+              Safe vs learned features, leakage prevention, and evaluation that reflects reality.
+            </p>
           </div>
         </div>
+
+        <p class="note">
+          Next step: we can turn your best Q&A into polished “insight cards” with links to full posts.
+        </p>
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="section alt">
       <div class="container">
-        <h2>Contact</h2>
-        <p class="lede">Best way to reach me:</p>
-        <div class="contact">
-          <a class="button" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="button primary" href="mailto:you@example.com">Email</a>
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p class="lede">If you’re building (or stabilizing) an ML system, let’s talk.</p>
         </div>
-        <p class="note">
-          Replace LinkedIn/GitHub/Email with your actual links.
+
+        <div class="contact-row">
+          <a class="button primary" href="mailto:greg@gibson-ai.com">Email me</a>
+          <a class="button" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="button ghost" href="https://github.com/gibsongGH" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+
+        <p class="fineprint">
+          Prefer async? Email works great — include a sentence on your data, goal, and timeline.
         </p>
       </div>
     </section>
 
     <footer class="footer">
-      <div class="container">
-        <p>© <span id="year"></span> Gibson AI</p>
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> Greg Gibson • Gibson AI</p>
+        <p class="muted">Clarity over hype.</p>
       </div>
     </footer>
   </main>
@@ -142,4 +237,3 @@
   </script>
 </body>
 </html>
-
