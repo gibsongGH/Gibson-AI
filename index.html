@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Greg Gibson | Gibson AI</title>
-  <meta name="description" content="Greg Gibson — independent ML consultant. Reproducible pipelines, disciplined experimentation, and decision-focused evaluation." />
+  <meta name="description" content="Greg Gibson — Independent ML & Analytics Consultant. Structured data systems and predictive modeling from operational metrics." />
 
   <!-- Open Graph (nice previews on LinkedIn/iMessage) -->
   <meta property="og:title" content="Greg Gibson | Gibson AI" />
-  <meta property="og:description" content="Practical machine learning systems that ship: pipelines, MLflow discipline, and decision-focused evaluation." />
+  <meta property="og:description" content="Structured ML pipelines, disciplined experimentation, and evaluation frameworks that turn operational metrics into predictive insight." />
+
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gibson-ai.com" />
   <meta property="og:image" content="https://gibson-ai.com/assets/images/og.png" />
@@ -35,23 +36,25 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="kicker">Independent ML Consultant</p>
-          <h1>Greg Gibson</h1>
+          <p class="kicker">Independent ML & Analytics Consultant</p>
+          <h1>Structured Machine Learning Systems from Operational Data</h1>
+          <p class="byline">Greg Gibson</p>
+
           <p class="hero-subhead">
-            I build <strong>practical machine learning systems that ship</strong> — reproducible pipelines,
-            disciplined experimentation, and decision-focused evaluation that turns data into decisions.
+            I design reproducible pipelines and disciplined evaluation frameworks that turn operational metrics into predictive insight.
           </p>
 
           <div class="cta">
-            <a class="button primary" href="#contact">Work with me</a>
-            <a class="button" href="#projects">See CardioSentinel</a>
+            <a class="button primary" href="#contact">Discuss a Project</a>
+            <a class="button" href="#projects">View Case Study</a>
+            <a class="button ghost" href="field-notes.html">Field Notes on AI</a>
           </div>
 
           <ul class="hero-badges" aria-label="Focus areas">
             <li>Pipeline architecture</li>
-            <li>MLflow experiment discipline</li>
-            <li>Thresholding & tradeoffs</li>
-            <li>Leakage-aware features</li>
+            <li>Reproducible experimentation</li>
+            <li>Threshold-aware evaluation</li>
+            <li>Leakage prevention</li>
           </ul>
 
           <div class="social-row" aria-label="Social links">
@@ -82,46 +85,70 @@
           <p class="lede">A flagship ML build that emphasizes structure, evaluation, and reproducibility.</p>
         </div>
 
-        <article class="card">
+        <article class="card case">
           <div class="card-head">
             <div>
               <h3>CardioSentinel</h3>
-              <p class="muted tight">Heart attack risk modeling system built for real-world tradeoffs.</p>
+              <p class="muted tight">A structured ML system for threshold-aware heart attack risk modeling.</p>
             </div>
-            <span class="pill">ML • Evaluation • Reproducibility</span>
+            <span class="pill">Case Study</span>
           </div>
 
-          <p>
-            An end-to-end modeling workflow exploring precision–recall tradeoffs under class imbalance
-            (~36% positive). The goal wasn’t to “chase accuracy” — it was to choose thresholds intentionally
-            and compare approaches with clear, repeatable experiments.
-          </p>
+          <div class="case-meta">
+            <div class="meta-item">
+              <span class="meta-label">Domain</span>
+              <span class="meta-value">Healthcare risk prediction</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Constraint</span>
+              <span class="meta-value">Class imbalance (~36% positive)</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Focus</span>
+              <span class="meta-value">Precision ↔ recall tradeoffs</span>
+            </div>
+          </div>
 
           <div class="grid-2">
             <div class="mini-card">
-              <h4>What I built</h4>
-              <ul class="bullets">
-                <li>Config-driven pipeline factory</li>
-                <li>Safe vs learned feature separation</li>
-                <li>MLflow experiment tracking & artifacts</li>
-              </ul>
+              <h4>Problem</h4>
+              <p class="muted">
+                In risk modeling, overall accuracy can mask critical failure modes. 
+                A model may appear strong while missing the cases that matter most.
+              </p>
             </div>
+
             <div class="mini-card">
-              <h4>What it demonstrates</h4>
+              <h4>Approach</h4>
               <ul class="bullets">
-                <li>Decision-focused evaluation (precision floors)</li>
-                <li>Threshold tuning with explicit tradeoffs</li>
-                <li>Comparative modeling (LR vs GBDT)</li>
+                <li>Config-driven pipeline factory (repeatable experiments)</li>
+                <li>Safe vs. learned feature separation to prevent leakage</li>
+                <li>MLflow tracking for structured model comparison</li>
+                <li>Precision-floor thresholding to align evaluation with use case</li>
               </ul>
             </div>
+          </div>
+
+          <div class="mini-card" style="margin-top:16px;">
+            <h4>Outcome</h4>
+            <p class="muted">
+              Above a precision floor of 0.40, recall declined sharply for several models.
+              A balanced logistic regression maintained more stable behavior across thresholds,
+              suggesting a largely monotonic signal. In this setting, a well-regularized linear model
+              matched or outperformed boosted trees while remaining easier to interpret and calibrate.
+            </p>
           </div>
 
           <div class="links">
-            <a class="button" href="https://github.com/gibsongGH/CardioSentinel" target="_blank" rel="noreferrer">GitHub Repo</a>
-            <a class="button ghost" href="#contact">Build something similar</a>
+            <a class="button" href="https://github.com/gibsongGH/CardioSentinel" target="_blank" rel="noreferrer">View on GitHub</a>
+            <a class="button ghost" href="#contact">Discuss a similar build</a>
           </div>
 
+          <p class="note">
+            This threshold-first evaluation approach applies across healthcare, fraud, churn, and safety modeling.
+          </p>
         </article>
+
       </div>
     </section>
 
@@ -130,38 +157,61 @@
       <div class="container">
         <div class="section-head">
           <h2>Consulting</h2>
-          <p class="lede">I help teams move from “we trained a model” to “we have a reliable ML system.”</p>
+          <p class="lede">
+            I help teams turn operational metrics into reliable analytics and reproducible ML pipelines—so results hold up outside the notebook.
+          </p>
         </div>
 
         <div class="grid-3">
           <div class="card">
-            <h3>Experiment frameworks</h3>
+            <h3>Operational analytics → predictive insight</h3>
             <p>
-              Clean experiment structure, MLflow tracking, metrics that match reality, and artifacts you can trust.
+              Clarify the metric definitions, build a clean dataset, and design an evaluation plan that reflects real tradeoffs
+              (false positives vs. false negatives, cost, capacity, and risk).
             </p>
+            <ul class="bullets">
+              <li>KPI definitions & data sanity checks</li>
+              <li>Target/label design and leakage review</li>
+              <li>Decision thresholds tied to use-case</li>
+            </ul>
           </div>
+
           <div class="card">
-            <h3>Pipelines & reproducibility</h3>
+            <h3>Reproducible pipelines & automation</h3>
             <p>
-              Turn notebooks into disciplined pipelines with feature governance, leakage checks, and repeatable runs.
+              Convert ad-hoc analysis into maintainable workflows: consistent preprocessing, feature governance, and repeatable runs
+              you (or your team) can operate confidently.
             </p>
+            <ul class="bullets">
+              <li>Pipeline refactors (notebook → modules)</li>
+              <li>Leakage-aware “safe vs learned” separation</li>
+              <li>Containerized, repeatable execution</li>
+            </ul>
           </div>
+
           <div class="card">
-            <h3>Evaluation strategy</h3>
+            <h3>Experimentation & model evaluation</h3>
             <p>
-              Precision/recall tradeoffs, thresholding, calibration, and cost-aware evaluation for your business context.
+              Structured comparisons across models and feature sets, with clear artifacts and tracking—so you can explain
+              what changed, why it improved, and what to do next.
             </p>
+            <ul class="bullets">
+              <li>MLflow tracking (params, metrics, artifacts)</li>
+              <li>PR/ROC analysis + calibration checks</li>
+              <li>Readable summaries for stakeholders</li>
+            </ul>
           </div>
         </div>
 
         <div class="callout">
           <p>
-            <strong>Engagement style:</strong> short diagnostic + clear plan, then implementation support as needed.
-            You’ll leave with a pipeline you can maintain — not a mysterious model.
+            <strong>Engagement style:</strong> a short diagnostic (data + goal + current workflow), followed by a clear plan.
+            Implementation support as needed. You’ll leave with a system your team can run and maintain—built for clarity, not mystery.
           </p>
         </div>
       </div>
     </section>
+
 
     <!-- INSIGHTS -->
     <section id="insights" class="section">
@@ -169,56 +219,72 @@
         <div class="section-head">
           <h2>Insights</h2>
           <p class="lede">
-            Curated write-ups based on real build-and-debug work. Practical, reusable, and occasionally fun.
+            Practical notes from real modeling work — focused on structure, evaluation discipline, and decision alignment.
           </p>
         </div>
 
         <div class="grid-3">
           <div class="card">
-            <h3>Thresholds: when “lower” is better</h3>
+            <h3>Thresholds: when “lower” improves outcomes</h3>
             <p>
-              Why shifting the decision threshold can improve recall when missing positives is expensive.
+              Why model performance shifts across decision thresholds — and how to align precision/recall tradeoffs
+              with operational constraints rather than default metrics.
             </p>
           </div>
+
           <div class="card">
-            <h3>Pipelines vs notebooks</h3>
+            <h3>Pipelines vs. notebooks</h3>
             <p>
-              Where exploration belongs, and where disciplined structure prevents silent failure.
+              Where exploration belongs — and how structured pipelines prevent leakage,
+              inconsistency, and silent evaluation errors.
             </p>
           </div>
+
           <div class="card">
-            <h3>Keeping ML honest</h3>
+            <h3>Designing leakage-aware features</h3>
             <p>
-              Safe vs learned features, leakage prevention, and evaluation that reflects reality.
+              Separating safe transformations from learned features to preserve evaluation integrity
+              and maintain trustworthy model comparisons.
             </p>
           </div>
         </div>
 
         <p class="note">
-          Next step: we can turn your best Q&A into polished “insight cards” with links to full posts.
+          Each insight is grounded in applied experimentation and reproducible system design — not theoretical best practices.
         </p>
       </div>
     </section>
+
 
     <!-- CONTACT -->
     <section id="contact" class="section alt">
       <div class="container">
         <div class="section-head">
           <h2>Contact</h2>
-          <p class="lede">If you’re building (or stabilizing) an ML system, let’s talk.</p>
+          <p class="lede">
+            If you’re building, evaluating, or restructuring a predictive system, I’m happy to discuss your data and goals.
+          </p>
         </div>
 
         <div class="contact-row">
-          <a class="button primary" href="mailto:greg@gibson-ai.com">Email me</a>
+          <a class="button primary" href="mailto:greg@gibson-ai.com">Start a Conversation</a>
           <a class="button" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noreferrer">LinkedIn</a>
           <a class="button ghost" href="https://github.com/gibsongGH" target="_blank" rel="noreferrer">GitHub</a>
         </div>
 
+        <div class="callout" style="margin-top:24px;">
+          <p>
+            <strong>What to include:</strong> a brief description of your dataset, current workflow, and the decision you’re trying to support.
+            I typically begin with a short diagnostic call and a clear, written plan before any deeper engagement.
+          </p>
+        </div>
+
         <p class="fineprint">
-          Prefer async? Email works great — include a sentence on your data, goal, and timeline.
+          Direct email works best. Thoughtful, structured work starts with a clear understanding of the problem.
         </p>
       </div>
     </section>
+
 
     <footer class="footer">
       <div class="container footer-inner">

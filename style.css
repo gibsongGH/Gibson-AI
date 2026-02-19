@@ -236,3 +236,42 @@ h2{font-size: clamp(24px, 3vw, 34px); margin:0 0 10px}
   .grid-2{grid-template-columns: 1fr}
 }
 
+/* --- Case Study refinements --- */
+.case-meta{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+  margin: 14px 0 16px;
+}
+.meta-item{
+  border:1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.03);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+.meta-label{
+  display:block;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(232,236,255,.65);
+  margin-bottom: 6px;
+}
+.meta-value{
+  display:block;
+  font-size: 14px;
+  color: rgba(232,236,255,.90);
+}
+
+@media (max-width: 920px){
+  .case-meta{grid-template-columns: 1fr;}
+}
+
+.credit {
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+
