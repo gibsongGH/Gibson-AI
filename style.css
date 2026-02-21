@@ -164,7 +164,7 @@ h2{font-size: clamp(24px, 3vw, 34px); margin:0 0 10px}
 .grid-3{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:16px;
+  gap:12px;
 }
 .grid-2{
   display:grid;
@@ -397,4 +397,74 @@ h2{font-size: clamp(24px, 3vw, 34px); margin:0 0 10px}
   background: rgba(106,166,255,.08);
   font-style: italic;
   color: rgba(232,236,255,.92);
+}
+
+.lede.full {
+  max-width: none;
+}
+
+/* AI Chats: Attention grouped images */
+.attention-stack a{
+  display:block;
+}
+
+.attention-stack img{
+  width:100%;
+  display:block;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.08);
+}
+
+/* Larger AI Chat cards */
+.figure{
+  padding:14px; /* overrides .card padding for these cards */
+}
+
+.figure a{
+  display:block;            /* makes the whole image area clickable cleanly */
+  border-radius:14px;       /* matches the image rounding */
+}
+
+.figure a:hover{
+  filter: brightness(1.03); /* subtle hover feedback */
+}
+
+.figure img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.08);
+}
+
+.figure figcaption{
+  margin-top:8px;
+  display:grid;
+  gap:4px;
+}
+
+.figure figcaption strong{
+  font-size:15px;
+}
+
+/* Click-to-zoom effect for screenshots */
+.figure a,
+.attention-stack a{
+  display:block;
+  border-radius:14px;
+  cursor: zoom-in;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.figure a:hover,
+.attention-stack a:hover{
+  transform: scale(1.01);            /* very subtle */
+  filter: brightness(1.05);          /* slight lift */
+}
+
+.figure a:active,
+.attention-stack a:active{
+  transform: scale(0.995);
 }
