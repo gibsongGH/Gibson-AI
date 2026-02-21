@@ -9,7 +9,7 @@
   --accent2:#8cffd6;
   --shadow: 0 14px 40px rgba(0,0,0,.38);
   --radius: 18px;
-  --max: 1100px;
+  --max: 1240px;
 }
 
 *{box-sizing:border-box}
@@ -418,7 +418,7 @@ h2{font-size: clamp(24px, 3vw, 34px); margin:0 0 10px}
 
 /* Larger AI Chat cards */
 .figure{
-  padding:14px; /* overrides .card padding for these cards */
+  padding:10px; /* overrides .card padding for these cards */
 }
 
 .figure a{
@@ -467,4 +467,18 @@ h2{font-size: clamp(24px, 3vw, 34px); margin:0 0 10px}
 .figure a:active,
 .attention-stack a:active{
   transform: scale(0.995);
+}
+
+@media (min-width: 900px){
+  .section-head .lede.full{
+    white-space: nowrap;
+  }
+}
+
+#ai-chats .card{
+  padding:18px;
+}
+
+.attention-stack img{
+  border-radius:12px;
 }
