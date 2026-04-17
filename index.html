@@ -2,307 +2,532 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Greg Gibson | Gibson AI</title>
-  <meta name="description" content="Greg Gibson — Independent ML & Analytics Consultant. Structured data systems and predictive modeling from operational metrics." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greg Gibson | AI Engineer</title>
+  <meta
+    name="description"
+    content="AI engineer building practical tools with RAG, tool calling, agent workflows, and applied machine learning."
+  />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121933;
+      --card: #161f3d;
+      --text: #edf2ff;
+      --muted: #b9c4ea;
+      --line: #2a3766;
+      --accent: #7aa2ff;
+      --accent-2: #90e0ef;
+      --max: 1120px;
+    }
 
-  <!-- Open Graph (nice previews on LinkedIn/iMessage) -->
-  <meta property="og:title" content="Greg Gibson | Gibson AI" />
-  <meta property="og:description" content="Structured ML pipelines, disciplined experimentation, and evaluation frameworks that turn operational metrics into predictive insight." />
+    * { box-sizing: border-box; }
 
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gibson-ai.com/" />
-  <meta property="og:image" content="https://gibson-ai.com/assets/images/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:type" content="image/png" />
-  
-  <link rel="canonical" href="https://gibson-ai.com/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://gibson-ai.com/assets/images/og.png" />
+    html { scroll-behavior: smooth; }
 
-  <link rel="stylesheet" href="style.css" />
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #0f1730 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 16, 32, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      padding: 5rem 0 3.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 0.85rem;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 64ch;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.15rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #08101f;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .hero-card,
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    .hero-card {
+      padding: 1.5rem;
+    }
+
+    .hero-card h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+    }
+
+    .hero-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .hero-list li {
+      padding: 0.8rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+
+    section {
+      padding: 1rem 0 3rem;
+    }
+
+    .section-intro {
+      max-width: 72ch;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      padding: 1.4rem;
+      height: 100%;
+    }
+
+    .project-rank {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(122, 162, 255, 0.12);
+      border: 1px solid rgba(122, 162, 255, 0.22);
+      color: #dbe6ff;
+      font-size: 0.86rem;
+    }
+
+    ul.clean {
+      margin: 0.75rem 0 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-item {
+      padding: 1.2rem;
+      border-left: 3px solid var(--accent);
+      background: rgba(255,255,255,0.025);
+      border-radius: 0 16px 16px 0;
+    }
+
+    .footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-2,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 3.5rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Gibson AI home">Gibson AI</a>
-      <nav class="nav" aria-label="Primary">
-        <a href="#projects">Project</a>
-        <a href="#consulting">Consulting</a>
-        <a href="#insights">Insights</a>
-        <a href="field-notes.html">Field Notes</a>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Greg Gibson</div>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#background">Background</a>
+        <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
-      </nav>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">AI Engineer Portfolio</div>
+        <h1>Building practical AI tools with real-world operations perspective.</h1>
+        <p class="lead">
+          I build applied AI projects that combine retrieval, tool calling, workflow automation,
+          and clear user-facing interfaces. My recent work emphasizes AI engineering, while my
+          earlier career focused on automating manual reporting across factory, warehouse,
+          logistics, and delivery operations.
+        </p>
+        <p class="lead">
+          That combination helps me approach AI systems with both builder mindset and business
+          realism: not just what a model can do, but how a tool fits into a repeatable process.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-secondary" href="https://github.com/gibsongGH" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/in/gregorykgibson" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+
+      <div style="display: grid; gap: 1rem; justify-items: center;">
+        <img 
+          src="assets/images/headshot.jpg" 
+          alt="Greg Gibson headshot"
+          style="
+            width: 260px;
+            max-width: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          "
+        />
+
+        <aside class="hero-card" style="width: 100%;">
+          <h3>What I focus on</h3>
+          <ul class="hero-list">
+            <li><strong>AI engineering:</strong> RAG, prompt orchestration, tool calling, agent-style workflows, and product-minded demos.</li>
+            <li><strong>Applied automation:</strong> turning manual, repetitive business tasks into reliable processes and decision support tools.</li>
+            <li><strong>Operational context:</strong> experience with manufacturing, warehouse, logistics, and delivery reporting environments.</li>
+          </ul>
+        </aside>
+      </div>
     </div>
   </header>
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="kicker">Independent ML & Analytics Consultant</p>
-          <h1>Structured Machine Learning Systems from Operational Data</h1>
-          <p class="byline">Greg Gibson</p>
-
-          <p class="hero-subhead">
-            I design reproducible pipelines and disciplined evaluation frameworks that turn operational metrics into predictive insight.
-          </p>
-
-          <div class="cta">
-            <a class="button primary" href="#contact">Discuss a Project</a>
-            <a class="button" href="#projects">View Case Study</a>
-            <a class="button ghost" href="field-notes.html">Field Notes on AI</a>
-          </div>
-
-          <ul class="hero-badges" aria-label="Focus areas">
-            <li>Pipeline architecture</li>
-            <li>Reproducible experimentation</li>
-            <li>Threshold-aware evaluation</li>
-            <li>Leakage prevention</li>
-          </ul>
-
-          <div class="social-row" aria-label="Social links">
-            <a class="textlink" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <span class="dot">•</span>
-            <a class="textlink" href="https://github.com/gibsongGH" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
-        </div>
-
-        <div class="hero-photo">
-          <img
-            src="assets/images/headshot.jpg"
-            alt="Professional headshot of Greg Gibson"
-            onerror="this.style.display='none'; document.getElementById('headshotFallback').style.display='block';"
-          />
-          <div id="headshotFallback" class="headshot-fallback" style="display:none;">
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECT -->
-    <section id="projects" class="section">
+  <main>
+    <section id="projects">
       <div class="container">
-        <div class="section-head">
-          <h2>Featured project</h2>
-          <p class="lede">A flagship ML build that emphasizes structure, evaluation, and reproducibility.</p>
-        </div>
-
-        <article class="card case">
-          <div class="card-head">
-            <div>
-              <h3>CardioSentinel</h3>
-              <p class="muted tight">A structured ML system for threshold-aware heart attack risk modeling.</p>
-            </div>
-            <span class="pill">Case Study</span>
-          </div>
-
-          <div class="case-meta">
-            <div class="meta-item">
-              <span class="meta-label">Domain</span>
-              <span class="meta-value">Healthcare risk prediction</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Constraint</span>
-              <span class="meta-value">Class imbalance (~36% positive)</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Focus</span>
-              <span class="meta-value">Precision ↔ recall tradeoffs</span>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="mini-card">
-              <h4>Problem</h4>
-              <p class="muted">
-                In risk modeling, overall accuracy can mask critical failure modes. 
-                A model may appear strong while missing the cases that matter most.
-              </p>
-            </div>
-
-            <div class="mini-card">
-              <h4>Approach</h4>
-              <ul class="bullets">
-                <li>Config-driven pipeline factory (repeatable experiments)</li>
-                <li>Safe vs. learned feature separation to prevent leakage</li>
-                <li>MLflow tracking for structured model comparison</li>
-                <li>Precision-floor thresholding to align evaluation with use case</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="mini-card" style="margin-top:16px;">
-            <h4>Outcome</h4>
-            <p class="muted">
-              Above a precision floor of 0.40, recall declined sharply for several models.
-              A balanced logistic regression maintained more stable behavior across thresholds,
-              suggesting a largely monotonic signal. In this setting, a well-regularized linear model
-              matched or outperformed boosted trees while remaining easier to interpret and calibrate.
-            </p>
-          </div>
-
-          <div class="links">
-            <a class="button" href="https://github.com/gibsongGH/CardioSentinel" target="_blank" rel="noreferrer">View on GitHub</a>
-            <a class="button ghost" href="#contact">Discuss a similar build</a>
-          </div>
-
-          <p class="note">
-            This threshold-first evaluation approach applies across healthcare, fraud, churn, and safety modeling.
-          </p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- CONSULTING -->
-    <section id="consulting" class="section alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>Consulting</h2>
-          <p class="lede">
-            I help teams turn operational metrics into reliable analytics and reproducible ML pipelines — so results hold up outside the notebook.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Operational analytics → predictive insight</h3>
-            <p>
-              Clarify the metric definitions, build a clean dataset, and design an evaluation plan that reflects real tradeoffs
-              (false positives vs. false negatives, cost, capacity, and risk).
-            </p>
-            <ul class="bullets">
-              <li>KPI definitions & data sanity checks</li>
-              <li>Target/label design and leakage review</li>
-              <li>Decision thresholds tied to use-case</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Reproducible pipelines & automation</h3>
-            <p>
-              Convert ad-hoc analysis into maintainable workflows: consistent preprocessing, feature governance, and repeatable runs
-              you (or your team) can operate confidently.
-            </p>
-            <ul class="bullets">
-              <li>Pipeline refactors (notebook → modules)</li>
-              <li>Leakage-aware “safe vs learned” separation</li>
-              <li>Containerized, repeatable execution</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Experimentation & model evaluation</h3>
-            <p>
-              Structured comparisons across models and feature sets, with clear artifacts and tracking—so you can explain
-              what changed, why it improved, and what to do next.
-            </p>
-            <ul class="bullets">
-              <li>MLflow tracking (params, metrics, artifacts)</li>
-              <li>PR/ROC analysis + calibration checks</li>
-              <li>Readable summaries for stakeholders</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="callout">
-          <p>
-            <strong>Engagement style:</strong> a short diagnostic (data + goal + current workflow), followed by a clear plan.
-            Implementation support as needed. You’ll leave with a system your team can run and maintain—built for clarity, not mystery.
-          </p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- INSIGHTS -->
-    <section id="insights" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Insights</h2>
-          <p class="lede">
-            Practical notes from real modeling work — focused on structure, evaluation discipline, and decision alignment.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Thresholds: when “lower” improves outcomes</h3>
-            <p>
-              Why model performance shifts across decision thresholds — and how to align precision/recall tradeoffs
-              with operational constraints rather than default metrics.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Pipelines vs. notebooks</h3>
-            <p>
-              Where exploration belongs — and how structured pipelines prevent leakage,
-              inconsistency, and silent evaluation errors.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Designing leakage-aware features</h3>
-            <p>
-              Separating safe transformations from learned features to preserve evaluation integrity
-              and maintain trustworthy model comparisons.
-            </p>
-          </div>
-        </div>
-
-        <p class="note">
-          Each insight is grounded in applied experimentation and reproducible system design — not theoretical best practices.
+        <h2>Featured Projects</h2>
+        <p class="section-intro">
+          My current portfolio is led by AI engineering work. The order below reflects the direction
+          I want to emphasize most strongly.
         </p>
+
+        <div class="project-grid">
+          <article class="card">
+            <div class="project-rank">Featured Project 01</div>
+            <h3>Digital Twin</h3>
+            <p>
+              A personal knowledge assistant built on my own career materials and background
+              content, using retrieval-augmented generation to answer questions grounded in
+              source documents rather than generic responses.
+            </p>
+            <div class="tags">
+              <span class="tag">RAG</span>
+              <span class="tag">Document Retrieval</span>
+              <span class="tag">Tool Calling</span>
+              <span class="tag">Personal Knowledge System</span>
+            </div>
+            <ul class="clean">
+              <li>Uses my own materials as the knowledge base for more accurate, context-aware answers.</li>
+              <li>Can call external tools such as alerts and notifications as part of a broader workflow.</li>
+              <li>Demonstrates how AI can be personalized, useful, and grounded in trusted source material.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="project-rank">Featured Project 02</div>
+            <h3>AI Article Writer</h3>
+            <p>
+              An AI workflow that generates written content and paired imagery from a user prompt,
+              combining structured prompting, tool usage, and a polished user-facing output.
+            </p>
+            <div class="tags">
+              <span class="tag">LLM Workflow</span>
+              <span class="tag">Content Generation</span>
+              <span class="tag">Image Generation</span>
+              <span class="tag">Prompt Design</span>
+            </div>
+            <ul class="clean">
+              <li>Turns a simple user input into a more complete article-generation experience.</li>
+              <li>Illustrates multi-step orchestration rather than a single isolated model call.</li>
+              <li>Highlights product thinking around usability, output quality, and end-user value.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="project-rank">Featured Project 03</div>
+            <h3>Netflix RAG Chatbot</h3>
+            <p>
+              A retrieval-augmented chatbot that answers questions about the Netflix Culture Memo,
+              using chunking, embeddings, vector search, and grounded response generation.
+            </p>
+            <div class="tags">
+              <span class="tag">OpenAI API</span>
+              <span class="tag">Embeddings</span>
+              <span class="tag">ChromaDB</span>
+              <span class="tag">Gradio</span>
+            </div>
+            <ul class="clean">
+              <li>Embeds source documents and retrieves the most relevant chunks at question time.</li>
+              <li>Uses retrieved context to reduce hallucinations and improve answer relevance.</li>
+              <li>Shows core AI engineering patterns for building trustworthy Q&A systems.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="project-rank">Featured Project 04</div>
+            <h3>CardioSentinel</h3>
+            <p>
+              A machine learning project that predicts heart attack risk, demonstrating end-to-end
+              model development with preprocessing, pipeline design, evaluation, and deployment-minded structure.
+            </p>
+            <div class="tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Pipelines</span>
+              <span class="tag">Model Evaluation</span>
+              <span class="tag">Scikit-learn</span>
+            </div>
+            <ul class="clean">
+              <li>Built as a complete prediction workflow rather than a notebook-only experiment.</li>
+              <li>Highlights feature preprocessing, model comparison, and practical ML implementation.</li>
+              <li>Still relevant, but now positioned behind my AI engineering portfolio work.</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
-
-    <!-- CONTACT -->
-    <section id="contact" class="section alt">
+    <section id="background">
       <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-          <p class="lede">
-            If you’re building, evaluating, or restructuring a predictive system, I’m happy to discuss your data and goals.
-          </p>
-        </div>
-
-        <div class="contact-row">
-          <a class="button primary" href="mailto:greg@gibson-ai.com">Start a Conversation</a>
-          <a class="button" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="button ghost" href="https://github.com/gibsongGH" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-
-        <div class="callout" style="margin-top:24px;">
-          <p>
-            <strong>What to include:</strong> a brief description of your dataset, current workflow, and the decision you’re trying to support.
-            I typically begin with a short diagnostic call and a clear, written plan before any deeper engagement.
-          </p>
-        </div>
-
-        <p class="fineprint">
-          Direct email works best. Thoughtful, structured work starts with a clear understanding of the problem.
+        <h2>Why AI Engineering Fits My Background</h2>
+        <p class="section-intro">
+          Before building AI applications, I spent years improving operational reporting and
+          automation in environments where accuracy, throughput, and repeatability mattered.
+          That experience still shapes how I think about software and AI systems today.
         </p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Factory and warehouse reporting automation</h3>
+            <p>
+              I worked on reducing manual reporting effort by improving how data was collected,
+              structured, validated, and turned into decision-ready outputs. That meant solving
+              practical problems around inconsistent inputs, delayed updates, and time-consuming manual work.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>Logistics and delivery operations support</h3>
+            <p>
+              I also supported reporting tied to logistics and delivery operations, where useful
+              automation had to do more than save time. It had to help teams monitor performance,
+              spot issues faster, and make better decisions under real business constraints.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>From operations automation to AI systems</h3>
+            <p>
+              That same mindset now carries into my AI work: create systems that are grounded,
+              practical, and worth using. I am especially interested in tools that combine model
+              intelligence with business workflows, retrieval, and automation.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
+    <section id="skills">
+      <div class="container">
+        <h2>Skills</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>AI Engineering</h3>
+            <div class="tags">
+              <span class="tag">LLM Applications</span>
+              <span class="tag">RAG</span>
+              <span class="tag">Prompt Engineering</span>
+              <span class="tag">Tool Calling</span>
+              <span class="tag">Agent Workflows</span>
+              <span class="tag">Gradio</span>
+              <span class="tag">OpenAI API</span>
+            </div>
+          </article>
 
-    <footer class="footer">
-      <div class="container footer-inner">
-        <p>© <span id="year"></span> Greg Gibson • Gibson AI</p>
-        <p class="muted">Clarity over hype.</p>
+          <article class="card">
+            <h3>Data and Software</h3>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Scikit-learn</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">Automation</span>
+              <span class="tag">Reporting Systems</span>
+            </div>
+          </article>
+        </div>
       </div>
-    </footer>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="card">
+          <h2>Let’s Connect</h2>
+          <p>
+            I am especially interested in AI engineering work that blends practical business value
+            with modern LLM tooling, retrieval, and automation.
+          </p>
+          <p>
+            Email: <a href="mailto:your-email@example.com">your-email@example.com</a><br />
+            GitHub: <a href="https://github.com/gibsongGH" target="_blank" rel="noopener noreferrer">gibsongGH</a><br />
+            LinkedIn: <a href="https://www.linkedin.com/in/gregorykgibson" target="_blank" rel="noopener noreferrer">gregorykgibson</a>
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Greg Gibson. Built to highlight AI engineering, applied automation, and practical problem solving.</p>
+    </div>
+  </footer>
 </body>
 </html>
+
+
