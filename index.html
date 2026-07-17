@@ -3,534 +3,234 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Greg Gibson | AI Engineer</title>
-  <meta
-    name="description"
-    content="AI engineer building practical tools with RAG, tool calling, agent workflows, and applied machine learning."
-  />
+  <title>Gibson AI | Business AI Implementation</title>
+  <meta name="description" content="Gibson AI helps small and medium-sized businesses automate repetitive computer work with practical AI systems for questions, scheduling, reporting, research, and operations." />
   <style>
     :root {
-      --bg: #0b1020;
-      --bg-soft: #121933;
-      --card: #161f3d;
-      --text: #edf2ff;
-      --muted: #b9c4ea;
-      --line: #2a3766;
-      --accent: #7aa2ff;
-      --accent-2: #90e0ef;
-      --max: 1120px;
+      --ink: #10233d;
+      --ink-soft: #496178;
+      --paper: #f5f8fb;
+      --white: #ffffff;
+      --navy: #091a30;
+      --blue: #2b72e6;
+      --aqua: #23c4c5;
+      --line: #d8e3ee;
+      --shadow: 0 16px 45px rgba(12, 38, 70, 0.10);
+      --max: 1160px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, var(--bg) 0%, #0f1730 100%);
-      color: var(--text);
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
     }
+    a { color: inherit; }
+    .container { width: min(92%, var(--max)); margin: 0 auto; }
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+    .brand { color: var(--navy); text-decoration: none; font-weight: 800; letter-spacing: 0.02em; }
+    .brand span { color: var(--blue); }
+    .nav-links { display: flex; gap: 1.15rem; align-items: center; flex-wrap: wrap; font-size: 0.94rem; font-weight: 650; color: #35516c; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta { color: var(--white) !important; background: var(--blue); padding: 0.52rem 0.85rem; border-radius: 999px; }
 
-    a {
-      color: var(--accent-2);
-      text-decoration: none;
-    }
+    .hero { overflow: hidden; color: var(--white); background: radial-gradient(circle at 84% 12%, #165cb5 0, transparent 27%), linear-gradient(125deg, #071426 0%, #0d315d 58%, #0b446e 100%); }
+    .hero-grid { display: grid; grid-template-columns: 1.06fr 0.94fr; gap: 3.5rem; align-items: center; padding: 5.6rem 0 5rem; }
+    .eyebrow { color: #8de5e5; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.55rem, 5.2vw, 4.75rem); line-height: 1.05; letter-spacing: -0.045em; margin: 0.65rem 0 1.2rem; }
+    h2 { color: var(--navy); font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.12; letter-spacing: -0.035em; margin-bottom: 0.85rem; }
+    h3 { color: var(--navy); font-size: 1.27rem; line-height: 1.22; margin-bottom: 0.65rem; }
+    .lead { color: #d9e9f9; font-size: 1.13rem; max-width: 59ch; }
+    .cta-row { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-top: 1.8rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0.7rem 1.05rem; border-radius: 999px; text-decoration: none; font-weight: 750; transition: transform 0.16s ease, box-shadow 0.16s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+    .btn-primary { color: var(--navy); background: var(--aqua); }
+    .btn-secondary { color: var(--white); border: 1px solid rgba(255,255,255,.42); }
+    .hero-note { margin: 1.35rem 0 0; color: #b9d1e7; font-size: 0.9rem; }
+    .video-shell { padding: 0.65rem; border: 1px solid rgba(255,255,255,.22); border-radius: 20px; background: rgba(255,255,255,.09); box-shadow: 0 24px 65px rgba(0,0,0,.28); }
+    .video-shell video { display: block; width: 100%; border-radius: 13px; background: #000; }
+    .video-caption { padding: 0.9rem 0.35rem 0.2rem; color: #d9e9f9; font-size: 0.95rem; }
+    .video-caption strong { color: #fff; }
 
-    a:hover { text-decoration: underline; }
-
-    .container {
-      width: min(92%, var(--max));
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-      background: rgba(11, 16, 32, 0.82);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      gap: 1rem;
-    }
-
-    .brand {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.95rem;
-    }
-
-    .hero {
-      padding: 5rem 0 3.5rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 0.9fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      margin-bottom: 0.85rem;
-      font-weight: 700;
-    }
-
-    h1, h2, h3 {
-      line-height: 1.2;
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: clamp(2.3rem, 5vw, 4rem);
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-size: clamp(1.6rem, 3vw, 2.3rem);
-      margin-bottom: 1rem;
-    }
-
-    .lead {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 64ch;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1.75rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 1.15rem;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .btn:hover {
-      text-decoration: none;
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #08101f;
-    }
-
-    .btn-secondary {
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .hero-card,
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
-
-    .hero-card {
-      padding: 1.5rem;
-    }
-
-    .hero-card h3 {
-      margin-bottom: 0.8rem;
-      font-size: 1.05rem;
-    }
-
-    .hero-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .hero-list li {
-      padding: 0.8rem 0.9rem;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted);
-    }
-
-    section {
-      padding: 1rem 0 3rem;
-    }
-
-    .section-intro {
-      max-width: 72ch;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      padding: 1.4rem;
-      height: 100%;
-    }
-
-    .project-rank {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.5rem;
-    }
-
-    .card p {
-      color: var(--muted);
-      margin-bottom: 0.9rem;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1rem 0;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.35rem 0.65rem;
-      border-radius: 999px;
-      background: rgba(122, 162, 255, 0.12);
-      border: 1px solid rgba(122, 162, 255, 0.22);
-      color: #dbe6ff;
-      font-size: 0.86rem;
-    }
-
-    ul.clean {
-      margin: 0.75rem 0 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
-    }
-
-    .timeline {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .timeline-item {
-      padding: 1.2rem;
-      border-left: 3px solid var(--accent);
-      background: rgba(255,255,255,0.025);
-      border-radius: 0 16px 16px 0;
-    }
-
-    .footer {
-      padding: 2rem 0 3rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+    section { padding: 5.4rem 0; }
+    .section-label { color: var(--blue); margin-bottom: 0.55rem; font-size: 0.82rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .section-intro { color: var(--ink-soft); font-size: 1.08rem; max-width: 67ch; margin-bottom: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 1.45rem; box-shadow: 0 8px 24px rgba(14,48,82,.045); }
+    .card p, .card li { color: var(--ink-soft); }
+    .number { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; color: var(--blue); background: #e8f0ff; border-radius: 50%; font-weight: 850; margin-bottom: 1rem; }
+    .split { display: grid; grid-template-columns: 1.02fr .98fr; gap: 2rem; align-items: start; }
+    .demo { background: #e9f4fb; }
+    .demo-panel { background: var(--navy); color: var(--white); border-radius: 22px; padding: 1.7rem; box-shadow: var(--shadow); }
+    .demo-panel h3 { color: var(--white); font-size: 1.55rem; }
+    .demo-panel p { color: #cbddec; }
+    .checklist { padding: 0; margin: 1.1rem 0 0; list-style: none; display: grid; gap: 0.8rem; }
+    .checklist li { position: relative; padding-left: 1.65rem; color: #d8e7f5; }
+    .checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--aqua); font-weight: 900; }
+    .video-card { overflow: hidden; padding: 0; }
+    .video-card video { display: block; width: 100%; background: #000; }
+    .video-card figcaption { padding: 1rem 1.2rem 1.2rem; color: var(--ink-soft); }
+    .video-card figcaption strong { color: var(--navy); display: block; margin-bottom: .2rem; }
+    .workflow { background: var(--white); }
+    .step { position: relative; padding-left: 4.4rem; min-height: 4rem; }
+    .step + .step { margin-top: 1.8rem; }
+    .step-number { position: absolute; top: 0; left: 0; display: grid; place-items: center; height: 2.9rem; width: 2.9rem; border-radius: 50%; color: var(--white); background: var(--blue); font-weight: 850; }
+    .step p { color: var(--ink-soft); margin-bottom: 0; }
+    .background { background: #edf3f7; }
+    .background .card { height: 100%; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.15rem; }
+    .tag { color: #245390; background: #e9f1ff; padding: .38rem .65rem; border-radius: 999px; font-size: .86rem; font-weight: 650; }
+    .contact { background: linear-gradient(120deg, #103b70, #0b6d8b); color: var(--white); }
+    .contact h2 { color: var(--white); }
+    .contact p { color: #d6e7f4; max-width: 57ch; }
+    .contact a { color: var(--white); font-weight: 750; }
+    .footer { padding: 1.5rem 0; color: #60758a; background: #071426; color: #aabed0; font-size: .9rem; }
 
     @media (max-width: 900px) {
-      .hero-grid,
-      .grid-2,
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 3.5rem;
-      }
+      .hero-grid, .split, .grid-3 { grid-template-columns: 1fr; }
+      .hero-grid { gap: 2.4rem; padding: 4rem 0; }
+    }
+    @media (max-width: 640px) {
+      .nav-inner { padding: .75rem 0; }
+      .nav-links { gap: .7rem; font-size: .84rem; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      section { padding: 4rem 0; }
     }
   </style>
 </head>
 <body>
   <nav class="nav">
     <div class="container nav-inner">
-      <div class="brand">Greg Gibson</div>
+      <a class="brand" href="#top">GIBSON <span>AI</span></a>
       <div class="nav-links">
-        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#demo">Demo</a>
+        <a href="#approach">Approach</a>
         <a href="#background">Background</a>
-        <a href="#skills">Skills</a>
-        <a href="field-notes.html">AI Musings & Field Notes</a>
-        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">Start a conversation</a>
       </div>
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="top">
     <div class="container hero-grid">
       <div>
-        <div class="eyebrow">AI Engineer Portfolio</div>
-        <h1>Building practical AI tools with real-world operations perspective.</h1>
-        <p class="lead">
-          I build applied AI projects that combine retrieval, tool calling, workflow automation,
-          and clear user-facing interfaces. My recent work emphasizes AI engineering, while my
-          earlier career focused on automating manual reporting across factory, warehouse,
-          logistics, and delivery operations.
-        </p>
-        <p class="lead">
-          That combination helps me approach AI systems with both builder mindset and business
-          realism: not just what a model can do, but how a tool fits into a repeatable process.
-        </p>
+        <div class="eyebrow">Business AI Implementation</div>
+        <h1>Automate and unburden your team.</h1>
+        <p class="lead">Gibson AI helps small and medium-sized businesses use AI to handle repetitive computer work—answering routine questions, organizing information, supporting scheduling, and turning manual work into reliable workflows.</p>
+        <p class="lead">The goal is practical: give your people more time for customers, judgment, and the work that actually moves the business forward.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#projects">View Projects</a>
-          <a class="btn btn-secondary" href="https://huggingface.co/gibsongHF" target="_blank" rel="noopener noreferrer">Demos</a>
-          <a class="btn btn-secondary" href="https://github.com/gibsongGH" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a class="btn btn-secondary" href="field-notes.html" rel="noopener noreferrer">AI Musings & Field Notes</a>
+          <a class="btn btn-primary" href="#contact">Discuss an AI workflow</a>
+          <a class="btn btn-secondary" href="#demo">Watch the live demo</a>
         </div>
+        <p class="hero-note">Built for real operations—not AI for its own sake.</p>
       </div>
-
-      <div style="display: grid; gap: 1rem; justify-items: center;">
-        <img 
-          src="assets/images/headshot.jpg" 
-          alt="Greg Gibson headshot"
-          style="
-            width: 260px;
-            max-width: 100%;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-          "
-        />
-
-        <aside class="hero-card" style="width: 100%;">
-          <h3>What I focus on</h3>
-          <ul class="hero-list">
-            <li><strong>AI engineering:</strong> RAG, prompt orchestration, tool calling, agent-style workflows, and product-minded demos.</li>
-            <li><strong>Applied automation:</strong> turning manual, repetitive business tasks into reliable processes and decision support tools.</li>
-            <li><strong>Operational context:</strong> experience with manufacturing, warehouse, logistics, and delivery reporting environments.</li>
-          </ul>
-        </aside>
+      <div class="video-shell">
+        <video controls preload="metadata" poster="">
+          <source src="assets/videos/digital-twin-demo.mp4" type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
+        <p class="video-caption"><strong>Live demonstration:</strong> a voice-enabled AI assistant that answers from trusted knowledge, helps with scheduling, and flags questions it cannot answer.</p>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="projects">
+    <section id="services">
       <div class="container">
-        <h2>Featured Projects</h2>
-        <p class="section-intro">
-          My current portfolio is led by AI engineering work.
-        </p>
-
-        <div class="project-grid">
+        <div class="section-label">What Gibson AI can help with</div>
+        <h2>Start with the work that keeps piling up.</h2>
+        <p class="section-intro">The best first AI project is usually not a grand transformation. It is a frustrating, repeatable task that drains time: a report someone rebuilds, questions that keep arriving, information scattered across documents, or customer follow-up that needs to be faster and more consistent.</p>
+        <div class="grid-3">
           <article class="card">
-            <div class="project-rank">Featured Project 01</div>
-            <h3>Digital Twin</h3>
-            <p>
-              A personal knowledge assistant built on my own career materials and background
-              content, using retrieval-augmented generation to answer questions grounded in
-              source documents rather than generic responses.
-            </p>
-            <div class="tags">
-              <span class="tag">RAG</span>
-              <span class="tag">Document Retrieval</span>
-              <span class="tag">Tool Calling</span>
-              <span class="tag">Personal Knowledge System</span>
-            </div>
-            <ul class="clean">
-              <li>Uses my own materials as the knowledge base for more accurate, context-aware answers.</li>
-              <li>Can call external tools such as alerts and notifications as part of a broader workflow.</li>
-              <li>Demonstrates how AI can be personalized, useful, and grounded in trusted source material.</li>
-            </ul>
+            <div class="number">01</div>
+            <h3>AI assistants for questions and requests</h3>
+            <p>Give employees or customers a useful first point of contact that can answer from approved business information, capture what it cannot resolve, and route the next step.</p>
           </article>
-
           <article class="card">
-            <div class="project-rank">Featured Project 02</div>
-            <h3>AI Article Writer</h3>
-            <p>
-              An AI workflow that generates written content and paired imagery from a user prompt,
-              combining structured prompting, tool usage, and a polished user-facing output.
-            </p>
-            <div class="tags">
-              <span class="tag">LLM Workflow</span>
-              <span class="tag">Content Generation</span>
-              <span class="tag">Image Generation</span>
-              <span class="tag">Prompt Design</span>
-            </div>
-            <ul class="clean">
-              <li>Turns a simple user input into a more complete article-generation experience.</li>
-              <li>Illustrates multi-step orchestration rather than a single isolated model call.</li>
-              <li>Highlights product thinking around usability, output quality, and end-user value.</li>
-            </ul>
+            <div class="number">02</div>
+            <h3>Workflow and reporting automation</h3>
+            <p>Reduce repetitive work around reporting, research, document preparation, data checks, and routine coordination—while keeping people in control of important decisions.</p>
           </article>
-
           <article class="card">
-            <div class="project-rank">Featured Project 03</div>
-            <h3>Netflix RAG Chatbot</h3>
-            <p>
-              A retrieval-augmented chatbot that answers questions about the Netflix Culture Memo,
-              using chunking, embeddings, vector search, and grounded response generation.
-            </p>
-            <div class="tags">
-              <span class="tag">OpenAI API</span>
-              <span class="tag">Embeddings</span>
-              <span class="tag">ChromaDB</span>
-              <span class="tag">Gradio</span>
-            </div>
-            <ul class="clean">
-              <li>Embeds source documents and retrieves the most relevant chunks at question time.</li>
-              <li>Uses retrieved context to reduce hallucinations and improve answer relevance.</li>
-              <li>Shows core AI engineering patterns for building trustworthy Q&A systems.</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <div class="project-rank">Featured Project 04</div>
-            <h3>CardioSentinel</h3>
-            <p>
-              A machine learning project that predicts heart attack risk, demonstrating end-to-end
-              model development with preprocessing, pipeline design, evaluation, and deployment-minded structure.
-            </p>
-            <div class="tags">
-              <span class="tag">Machine Learning</span>
-              <span class="tag">Pipelines</span>
-              <span class="tag">Model Evaluation</span>
-              <span class="tag">Scikit-learn</span>
-            </div>
-            <ul class="clean">
-              <li>Built as a complete prediction workflow rather than a notebook-only experiment.</li>
-              <li>Highlights feature preprocessing, model comparison, and practical ML implementation.</li>
-              <li>Structured for reproducibility and scalability using modular pipelines and containerized environments.</li>
-            </ul>
+            <div class="number">03</div>
+            <h3>Practical analytics and machine learning</h3>
+            <p>When the business case calls for it, use data, forecasting, or machine learning to improve decisions—not as a separate technology exercise.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="background">
-      <div class="container">
-        <h2>Why AI Engineering Fits My Background</h2>
-        <p class="section-intro">
-          Before building AI applications, I spent years improving operational reporting and
-          automation in environments where accuracy, throughput, and repeatability mattered.
-          That experience still shapes how I think about software and AI systems today.
-        </p>
+    <section class="demo" id="demo">
+      <div class="container split">
+        <div class="demo-panel">
+          <div class="section-label" style="color:#8de5e5">See it work</div>
+          <h3>A working example, not just a list of promises.</h3>
+          <p>The Digital Twin demonstration shows the building blocks of an AI assistant that can be adapted for a business: its own trusted knowledge, natural conversation, and a clear handoff when a person is needed.</p>
+          <ul class="checklist">
+            <li>Voice and typed questions in one simple interface</li>
+            <li>Answers grounded in a curated knowledge base</li>
+            <li>Scheduling support through connected tools</li>
+            <li>Alerts when a question needs a human response</li>
+          </ul>
+        </div>
+        <figure class="card video-card">
+          <video controls preload="metadata">
+            <source src="assets/videos/digital-twin-short-demo.mp4" type="video/mp4" />
+            Your browser does not support HTML video.
+          </video>
+          <figcaption><strong>One-minute highlight</strong>The assistant identifies an unanswered question and sends the real person a notification—so an important customer or employee request does not disappear into a chat window.</figcaption>
+        </figure>
+      </div>
+    </section>
 
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Factory and warehouse reporting automation</h3>
-            <p>
-              I worked on reducing manual reporting effort by improving how data was collected,
-              structured, validated, and turned into decision-ready outputs. That meant solving
-              practical problems around inconsistent inputs, delayed updates, and time-consuming manual work.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Logistics and delivery operations support</h3>
-            <p>
-              I also supported reporting tied to logistics and delivery operations, where useful
-              automation had to do more than save time. It had to help teams monitor performance,
-              spot issues faster, and make better decisions under real business constraints.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>From operations automation to AI systems</h3>
-            <p>
-              That same mindset now carries into my AI work: create systems that are grounded,
-              practical, and worth using. I am especially interested in tools that combine model
-              intelligence with business workflows, retrieval, and automation.
-            </p>
-          </div>
+    <section class="workflow" id="approach">
+      <div class="container split">
+        <div>
+          <div class="section-label">A practical starting point</div>
+          <h2>From a work bottleneck to a usable system.</h2>
+          <p class="section-intro">Implementation begins with the business process—not with a generic AI tool. That keeps the project focused, easier to test, and connected to work your team already understands.</p>
+        </div>
+        <div>
+          <div class="step"><div class="step-number">1</div><h3>Find the friction</h3><p>Identify the repeated task, the people involved, the information it needs, and what a better outcome would look like.</p></div>
+          <div class="step"><div class="step-number">2</div><h3>Build a focused pilot</h3><p>Create a small, useful workflow with clear boundaries, review points, and a simple way to measure whether it saves time or improves responsiveness.</p></div>
+          <div class="step"><div class="step-number">3</div><h3>Refine and extend</h3><p>Use what the pilot reveals to improve the workflow, train the people using it, and decide whether to expand the system into adjacent processes.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="skills">
+    <section class="background" id="background">
       <div class="container">
-        <h2>Skills</h2>
-        <div class="grid-2">
-          <article class="card">
-            <h3>AI Engineering</h3>
-            <div class="tags">
-              <span class="tag">LLM Applications</span>
-              <span class="tag">RAG</span>
-              <span class="tag">Prompt Engineering</span>
-              <span class="tag">Tool Calling</span>
-              <span class="tag">Agent Workflows</span>
-              <span class="tag">Gradio</span>
-              <span class="tag">OpenAI API</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3>Data and Software</h3>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Pandas</span>
-              <span class="tag">SQL</span>
-              <span class="tag">Scikit-learn</span>
-              <span class="tag">GitHub</span>
-              <span class="tag">Automation</span>
-              <span class="tag">Reporting Systems</span>
-            </div>
-          </article>
+        <div class="section-label">Why Gibson AI</div>
+        <h2>AI implementation grounded in operations.</h2>
+        <p class="section-intro">Before working with AI systems, Greg Gibson improved reporting and automation in factory, warehouse, logistics, and delivery environments. That background brings a practical question to every project: will this make the work easier, clearer, and more dependable for the people who have to use it?</p>
+        <div class="grid-3">
+          <article class="card"><h3>Operations perspective</h3><p>Experience turning messy inputs, manual reporting, and delayed information into clearer, more reliable business processes.</p></article>
+          <article class="card"><h3>Builder mindset</h3><p>Hands-on work with AI applications, retrieval-augmented generation, tool calling, automation, and user-facing prototypes.</p></article>
+          <article class="card"><h3>Right-sized technology</h3><p>Use the simplest approach that solves the problem well. AI, data automation, and machine learning each have a place—but not every problem needs all three.</p></article>
+        </div>
+        <div class="tag-list" aria-label="Capabilities">
+          <span class="tag">AI assistants</span><span class="tag">Knowledge search</span><span class="tag">Workflow automation</span><span class="tag">Reporting</span><span class="tag">Scheduling support</span><span class="tag">Analytics</span><span class="tag">Machine learning</span>
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section class="contact" id="contact">
       <div class="container">
-        <div class="card">
-          <h2>Let’s Connect</h2>
-          <p>
-            I am especially interested in AI engineering work that blends practical business value
-            with modern LLM tooling, retrieval, and automation.
-          </p>
-          <p>
-            Email: <a href="mailto:greg@gibson-ai.com">greg@gibson-ai.com</a><br />
-            GitHub: <a href="https://github.com/gibsongGH" target="_blank" rel="noopener noreferrer">gibsongGH</a><br />
-            Hugging Face: <a href="https://huggingface.co/gibsongHF" target="_blank" rel="noopener noreferrer">gibsongHF</a><br />
-            LinkedIn: <a href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noopener noreferrer">gregorykgibson</a>
-          </p>
-        </div>
+        <div class="section-label" style="color:#8de5e5">Let’s talk</div>
+        <h2>What is one computer task your team wishes would take care of itself?</h2>
+        <p>Start with the process that creates the most repeated effort or unanswered requests. We can explore whether a focused AI workflow is a good fit.</p>
+        <div class="cta-row"><a class="btn btn-primary" href="mailto:greg@gibson-ai.com?subject=Gibson%20AI%20workflow%20conversation">Email Greg Gibson</a><a class="btn btn-secondary" href="https://www.linkedin.com/in/gregorykgibson/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a></div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Greg Gibson. Built to highlight AI engineering, applied automation, and practical problem solving.</p>
-    </div>
-  </footer>
+  <footer class="footer"><div class="container">© 2026 Gibson AI · Business AI implementation for practical, repeatable work.</div></footer>
 </body>
 </html>
-
-
