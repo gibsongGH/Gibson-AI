@@ -1,2 +1,4 @@
 # Gibson AI
-[Gibson-AI.com](https://www.gibson-ai.com)
+### [Gibson-AI.com](https://www.gibson-ai.com)
+
+### Automate and unburden.
