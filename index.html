@@ -62,6 +62,7 @@
     .section-label { color: var(--blue); margin-bottom: 0.55rem; font-size: 0.82rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
     .section-intro { color: var(--ink-soft); font-size: 1.08rem; max-width: 67ch; margin-bottom: 2rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.2rem; }
     .card { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 1.45rem; box-shadow: 0 8px 24px rgba(14,48,82,.045); }
     .card p, .card li { color: var(--ink-soft); }
     .number { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; color: var(--blue); background: #e8f0ff; border-radius: 50%; font-weight: 850; margin-bottom: 1rem; }
@@ -83,6 +84,8 @@
     .step-number { position: absolute; top: 0; left: 0; display: grid; place-items: center; height: 2.9rem; width: 2.9rem; border-radius: 50%; color: var(--white); background: var(--blue); font-weight: 850; }
     .step p { color: var(--ink-soft); margin-bottom: 0; }
     .background { background: #edf3f7; }
+    .about-grid { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 2rem; align-items: center; margin-bottom: 2rem; }
+    .headshot { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 20px; border: 5px solid var(--white); box-shadow: var(--shadow); }
     .background .card { height: 100%; }
     .tag-list { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.15rem; }
     .tag { color: #245390; background: #e9f1ff; padding: .38rem .65rem; border-radius: 999px; font-size: .86rem; font-weight: 650; }
@@ -93,8 +96,10 @@
     .footer { padding: 1.5rem 0; color: #60758a; background: #071426; color: #aabed0; font-size: .9rem; }
 
     @media (max-width: 900px) {
-      .hero-grid, .split, .grid-3 { grid-template-columns: 1fr; }
+      .hero-grid, .split, .grid-3, .grid-4, .about-grid { grid-template-columns: 1fr; }
       .hero-grid { gap: 2.4rem; padding: 4rem 0; }
+      .about-grid { max-width: 720px; }
+      .headshot { max-width: 240px; }
     }
     @media (max-width: 640px) {
       .nav-inner { padding: .75rem 0; }
@@ -110,6 +115,7 @@
       <a class="brand" href="#top">GIBSON <span>AI</span></a>
       <div class="nav-links">
         <a href="#services">Services</a>
+        <a href="#apps">Live Apps</a>
         <a href="#demo">Demo</a>
         <a href="#approach">Approach</a>
         <a href="#background">Background</a>
@@ -137,6 +143,7 @@
           Your browser does not support HTML video.
         </video>
         <p class="video-caption"><strong>Live demonstration:</strong> a voice-enabled AI assistant that answers from trusted knowledge, helps with scheduling, and flags questions it cannot answer.</p>
+        <a class="btn btn-secondary" style="margin: .35rem 0 .25rem;" href="https://huggingface.co/spaces/gibsongHF/Greg-Digital-Twin" target="_blank" rel="noopener noreferrer">Open the live Digital Twin</a>
       </div>
     </div>
   </header>
@@ -167,6 +174,36 @@
       </div>
     </section>
 
+    <section id="apps">
+      <div class="container">
+        <div class="section-label">Live applications</div>
+        <h2>Explore the applications behind the work.</h2>
+        <p class="section-intro">The videos show one working workflow. These live projects let visitors explore the applications themselves and see the different patterns Gibson AI builds with.</p>
+        <div class="grid-4">
+          <article class="card">
+            <h3>Digital Twin</h3>
+            <p>A voice-enabled, knowledge-grounded assistant that answers questions, supports scheduling, and surfaces unanswered requests for follow-up.</p>
+            <a class="btn btn-primary" href="https://huggingface.co/spaces/gibsongHF/Greg_Digital_Twin" target="_blank" rel="noopener noreferrer">Try the Digital Twin</a>
+          </article>
+          <article class="card">
+            <h3>Netflix RAG Chatbot</h3>
+            <p>A document-based question-answering demo that shows how retrieval can ground responses in a trusted knowledge base.</p>
+            <a class="btn btn-primary" href="https://huggingface.co/spaces/gibsongHF/Netflix_RAG" target="_blank" rel="noopener noreferrer">Open Netflix RAG</a>
+          </article>
+          <article class="card">
+            <h3>AI Article Writer</h3>
+            <p>A multi-step AI workflow that turns a prompt into an article and paired image, demonstrating orchestration and user-facing output.</p>
+            <a class="btn btn-primary" href="https://huggingface.co/spaces/gibsongHF/ai-article-writer" target="_blank" rel="noopener noreferrer">Browse live demos</a>
+          </article>
+          <article class="card">
+            <h3>CardioSentinel</h3>
+            <p>A machine-learning project that demonstrates structured data preparation, model evaluation, and a reproducible predictive workflow.</p>
+            <a class="btn btn-primary" href="https://github.com/gibsongGH/CardioSentinel" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="demo" id="demo">
       <div class="container split">
         <div class="demo-panel">
@@ -180,13 +217,12 @@
             <li>Alerts when a question needs a human response</li>
           </ul>
         </div>
-        <figure class="card video-card">
-          <video controls preload="metadata">
-            <source src="assets/videos/digital-twin-short-demo.mp4" type="video/mp4" />
-            Your browser does not support HTML video.
-          </video>
-          <figcaption><strong>One-minute highlight</strong>The assistant identifies an unanswered question and sends the real person a notification—so an important customer or employee request does not disappear into a chat window.</figcaption>
-        </figure>
+        <div class="card">
+          <h3>From useful answers to reliable follow-up</h3>
+          <p>The demo is not a generic chat window. It combines a curated knowledge base, a voice interface, scheduling support, and a handoff when the assistant reaches a question that needs a person.</p>
+          <p>That same pattern can help teams respond more consistently while making sure important questions are still seen and handled.</p>
+          <a class="btn btn-primary" href="https://huggingface.co/spaces/gibsongHF/Greg_Digital_Twin" target="_blank" rel="noopener noreferrer">Explore the live app</a>
+        </div>
       </div>
     </section>
 
@@ -209,7 +245,13 @@
       <div class="container">
         <div class="section-label">Why Gibson AI</div>
         <h2>AI implementation grounded in operations.</h2>
-        <p class="section-intro">Before working with AI systems, Greg Gibson improved reporting and automation in factory, warehouse, logistics, and delivery environments. That background brings a practical question to every project: will this make the work easier, clearer, and more dependable for the people who have to use it?</p>
+        <div class="about-grid">
+          <img class="headshot" src="assets/images/headshot.jpg" alt="Greg Gibson, founder of Gibson AI" />
+          <div>
+            <p class="section-intro" style="margin-bottom: 0;">Before working with AI systems, Greg Gibson improved reporting and automation in factory, warehouse, logistics, and delivery environments. That background brings a practical question to every project: will this make the work easier, clearer, and more dependable for the people who have to use it?</p>
+            <p style="margin: 1rem 0 0;"><a href="field-notes.html" style="color: var(--blue); font-weight: 750;">Read Field Notes: Building with AI →</a></p>
+          </div>
+        </div>
         <div class="grid-3">
           <article class="card"><h3>Operations perspective</h3><p>Experience turning messy inputs, manual reporting, and delayed information into clearer, more reliable business processes.</p></article>
           <article class="card"><h3>Builder mindset</h3><p>Hands-on work with AI applications, retrieval-augmented generation, tool calling, automation, and user-facing prototypes.</p></article>
@@ -231,6 +273,6 @@
     </section>
   </main>
 
-  <footer class="footer"><div class="container">© 2026 Gibson AI · Business AI implementation for practical, repeatable work.</div></footer>
+  <footer class="footer"><div class="container">© 2026 Gibson AI · Business AI implementation for practical, repeatable work. · <a href="field-notes.html">Field Notes: Building with AI</a></div></footer>
 </body>
 </html>
