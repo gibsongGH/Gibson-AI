@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching an Agent to Remember | Gibson AI Case Study</title>
+  <meta name="description" content="A case study on adding durable, gated, cross-session memory to a retrieval agent, and proving it survives a process restart." />
+  <style>
+    :root {
+      --ink: #10233d;
+      --ink-soft: #496178;
+      --paper: #f5f8fb;
+      --white: #ffffff;
+      --navy: #091a30;
+      --blue: #2b72e6;
+      --aqua: #23c4c5;
+      --line: #d8e3ee;
+      --shadow: 0 16px 45px rgba(12, 38, 70, 0.10);
+      --max: 1160px;
+      --read: 860px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: var(--blue); }
+    a:hover { color: #1a5bc4; }
+    .container { width: min(92%, var(--max)); margin: 0 auto; }
+    .read { width: min(92%, var(--read)); margin: 0 auto; }
+    .wide { width: min(92%, 1100px); margin: 0 auto; }
+
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+    .brand { color: var(--navy); text-decoration: none; font-weight: 800; letter-spacing: 0.02em; }
+    .brand span { color: var(--blue); }
+    .nav-links { display: flex; gap: 1.15rem; align-items: center; flex-wrap: wrap; font-size: 0.94rem; font-weight: 650; color: #35516c; }
+    .nav-links a { text-decoration: none; color: #35516c; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a.here { color: var(--blue); }
+    .nav-cta { color: var(--white) !important; background: var(--blue); padding: 0.52rem 0.85rem; border-radius: 999px; }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.2rem, 4.4vw, 3.5rem); line-height: 1.07; letter-spacing: -0.04em; margin: 0.65rem 0 1.1rem; }
+    h2 { color: var(--navy); font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.12; letter-spacing: -0.035em; margin-bottom: 1.4rem; }
+    h3 { color: var(--navy); font-size: 1.27rem; line-height: 1.22; margin-bottom: 0.65rem; }
+
+    .hero { color: var(--white); background: radial-gradient(circle at 84% 12%, #165cb5 0, transparent 27%), linear-gradient(125deg, #071426 0%, #0d315d 58%, #0b446e 100%); }
+    .hero-inner { padding: 4.6rem 0 4rem; }
+    .eyebrow { color: #8de5e5; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+    .hero .subtitle { color: #d9e9f9; font-size: 1.15rem; max-width: 56ch; margin-bottom: 2rem; }
+    .byline { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; font-size: 0.9rem; color: #9fb6cc; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.18); }
+    .byline strong { color: var(--white); font-weight: 750; }
+
+    .cta-row { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-top: 1.8rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0.7rem 1.05rem; border-radius: 999px; text-decoration: none; font-weight: 750; transition: transform 0.16s ease, box-shadow 0.16s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+    .btn-primary { color: var(--navy); background: var(--aqua); }
+    .btn-secondary { color: var(--white); border: 1px solid rgba(255,255,255,.42); }
+
+    section { padding: 4.6rem 0; }
+    section.on-white { background: var(--white); }
+    section.on-tint { background: #e9f4fb; }
+    .section-label { color: var(--blue); margin-bottom: 0.55rem; font-size: 0.82rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .lede { color: var(--ink-soft); font-size: 1.16rem; }
+    p.body { color: var(--ink-soft); }
+    p.emphasis { color: var(--ink); font-weight: 650; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; background: #eef3f9; padding: 0.1rem 0.35rem; border-radius: 5px; color: var(--ink); }
+
+    .decisions { display: grid; gap: 1.8rem; }
+    .step { position: relative; padding-left: 4.4rem; }
+    .step-number { position: absolute; top: 0; left: 0; display: grid; place-items: center; height: 2.9rem; width: 2.9rem; border-radius: 50%; color: var(--white); background: var(--blue); font-weight: 850; }
+    .step p { color: var(--ink-soft); margin-bottom: 0; }
+
+    .schema { margin-top: 2.4rem; background: var(--navy); color: var(--white); border-radius: 22px; padding: 1.9rem; box-shadow: var(--shadow); }
+    .schema dl { display: grid; gap: 0.9rem; margin: 0; }
+    .schema .row { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 0.4rem 1.5rem; padding-bottom: 0.9rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .schema .row:last-of-type { border-bottom: 0; padding-bottom: 0; }
+    .schema dt { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--aqua); font-size: 0.95rem; }
+    .schema dd { color: #cbddec; margin: 0; }
+    .schema .note { color: #9fb6cc; font-size: 0.92rem; margin: 1.5rem 0 0; }
+    .schema .note em { color: var(--white); font-style: normal; font-weight: 750; }
+
+    .figure { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 1.9rem; box-shadow: var(--shadow); }
+    .figure svg { display: block; width: 100%; height: auto; }
+    .figure figcaption { color: var(--ink-soft); font-size: 0.95rem; margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+    .fig-label { color: var(--blue); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 0.78rem; margin-right: 0.65rem; }
+
+    .timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.2rem; }
+    .timeline li { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 1.45rem; box-shadow: 0 8px 24px rgba(14,48,82,.045); }
+    .timeline li.verified { border-color: var(--aqua); }
+    .step-label { color: var(--blue); font-size: 0.78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .step-label.verified-label { color: #0d5f5f; }
+    .timeline p { color: var(--ink-soft); margin-bottom: 0; }
+    .timeline p + p { margin-top: 0.7rem; }
+    .timeline p.detail { color: var(--ink); font-weight: 650; }
+
+    .exhibits { display: grid; gap: 1.6rem; margin-top: 2.6rem; }
+    .exhibit { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(14,48,82,.045); }
+    .exhibit img { display: block; width: 100%; background: var(--paper); }
+    .exhibit figcaption { padding: 1.1rem 1.4rem 1.3rem; color: var(--ink-soft); font-size: 0.95rem; }
+
+    blockquote { margin: 0 0 1.8rem; padding: 1.7rem 1.9rem; background: #e9f4fb; border-radius: 18px; color: var(--navy); font-size: 1.28rem; line-height: 1.4; letter-spacing: -0.015em; }
+
+    .closing { background: linear-gradient(120deg, #103b70, #0b6d8b); color: var(--white); }
+    .closing h2 { color: var(--white); font-size: clamp(1.7rem, 2.8vw, 2.3rem); }
+    .closing p { color: #d6e7f4; max-width: 57ch; }
+
+    .footer { padding: 1.5rem 0; background: #071426; color: #aabed0; font-size: .9rem; }
+    .footer a { color: #aabed0; }
+
+    @media (max-width: 900px) {
+      .schema .row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-inner { padding: .75rem 0; }
+      .nav-links { gap: .7rem; font-size: .84rem; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      section { padding: 3.6rem 0; }
+      .step { padding-left: 0; }
+      .step-number { position: static; margin-bottom: .8rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">GIBSON <span>AI</span></a>
+      <div class="nav-links">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#apps">Live Apps</a>
+        <a class="here" href="index.html#case-studies">Case Studies</a>
+        <a href="index.html#approach">Approach</a>
+        <a href="index.html#background">Background</a>
+        <a class="nav-cta" href="index.html#contact">Start a conversation</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="read hero-inner">
+      <div class="eyebrow">Case study &mdash; Agent systems</div>
+      <h1>Teaching an Agent to Remember (Only What It Should)</h1>
+      <p class="subtitle">Adding durable, cross-session memory to a retrieval agent &mdash; and proving, not asserting, that it survives a restart.</p>
+      <div class="byline">
+        <span><strong>Greg Gibson</strong></span>
+        <span>&middot;</span>
+        <span>Agent architecture &amp; hardening</span>
+        <span>&middot;</span>
+        <span>August 2026</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://ai-internship-jx6n.onrender.com/memory" target="_blank" rel="noopener noreferrer">Open the live memory store</a>
+        <a class="btn btn-secondary" href="#verification">Jump to the verification</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="read">
+        <div class="section-label">The problem</div>
+        <h2>Most agents forget everything the moment a session ends.</h2>
+        <p class="lede">Ask a support bot a question today and it treats you like a stranger tomorrow &mdash; same account, same open ticket, same stated preference, gone.</p>
+        <p class="body">The reflexive fix is to store everything: every message, every retrieved document, every tool call, into a vector store, and call it &ldquo;memory.&rdquo; That produces an agent that recalls constantly and reliably nothing in particular &mdash; the one fact that mattered is buried under a thousand that didn&rsquo;t, and there&rsquo;s no way to audit what the agent actually believes about a given user.</p>
+        <p class="emphasis">The harder, more useful problem is deciding what an agent is allowed to remember &mdash; and proving that what it remembers actually persists.</p>
+      </div>
+    </section>
+
+    <section class="on-white">
+      <div class="read">
+        <div class="section-label">The approach</div>
+        <h2>Three decisions, made before any code.</h2>
+        <div class="decisions">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Gate the writes, not the reads.</h3>
+            <p>Rather than let the model decide on the fly what&rsquo;s worth keeping, the schema is fixed up front: a short, named allow-list of durable facts, and nothing else is ever accepted for long-term storage. Retrieved documents, one-off task details, raw tool output &mdash; all of it stays in that session&rsquo;s ephemeral history and disappears when the session ends, by design.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Enforce it twice.</h3>
+            <p>The storage layer rejects any key outside the allow-list outright, independent of what the model intends. The agent&rsquo;s own instructions repeat the same constraint in plain language. Neither layer trusts the other to catch everything &mdash; the same defense-in-depth pattern used to harden this agent against a prompt-injection attempt earlier in the project. An agent that only enforces a policy in its prompt degrades the moment someone finds the seam.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Prove it, don&rsquo;t assert it.</h3>
+            <p>&ldquo;Survives a restart&rdquo; is a claim until you actually kill the process. So that&rsquo;s the test: write a fact, terminate the server outright, bring up a cold process with no memory of anything, and read the fact back with nothing re-stated. See <a href="#verification">Verification</a> below.</p>
+          </div>
+        </div>
+
+        <div class="schema">
+          <div class="section-label" style="color:#8de5e5">The entire durable-memory schema</div>
+          <dl>
+            <div class="row"><dt>preferred_name</dt><dd>what the user wants to be called</dd></div>
+            <div class="row"><dt>preferred_language</dt><dd>language to answer in</dd></div>
+            <div class="row"><dt>last_topic</dt><dd>subject of the most recent question, for continuity</dd></div>
+          </dl>
+          <p class="note">Three keys. Any other key is rejected with a 400 at write time &mdash; this list <em>is</em> the product decision, not an implementation detail.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="on-tint">
+      <div class="wide">
+        <div class="section-label">Architecture</div>
+        <h2>Two sessions, one store that outlives both.</h2>
+        <p class="body" style="font-size:1.08rem; max-width:67ch; margin-bottom:2rem;">Two separate agent instances with no shared history, both talking to one store that outlives either of them.</p>
+
+        <figure class="figure">
+          <svg viewBox="0 0 720 400" role="img" aria-label="Session A and Session B are two separate, ephemeral agent instances with no shared history. Both call through a write gate that checks the key against a fixed allow-list before reaching the persistent memory store below. A process restart, shown as a dashed boundary between the two sessions, does not affect the store.">
+            <defs>
+              <marker id="csArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#496178"></path>
+              </marker>
+            </defs>
+            <rect x="40" y="40" width="230" height="86" rx="6" fill="#f5f8fb" stroke="#b9cee3" stroke-width="1.2" stroke-dasharray="4 3"></rect>
+            <text x="155" y="66" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#2b72e6">SESSION A</text>
+            <text x="155" y="88" text-anchor="middle" font-size="12.5" fill="#10233d">agent &middot; fresh session</text>
+            <text x="155" y="106" text-anchor="middle" font-size="12.5" fill="#496178">&ldquo;call me Greg, answer in English&rdquo;</text>
+
+            <rect x="450" y="40" width="230" height="86" rx="6" fill="#f5f8fb" stroke="#b9cee3" stroke-width="1.2" stroke-dasharray="4 3"></rect>
+            <text x="565" y="66" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#2b72e6">SESSION B</text>
+            <text x="565" y="88" text-anchor="middle" font-size="12.5" fill="#10233d">agent &middot; fresh session</text>
+            <text x="565" y="106" text-anchor="middle" font-size="12.5" fill="#496178">&ldquo;what&rsquo;s my name?&rdquo;</text>
+
+            <line x1="360" y1="30" x2="360" y2="220" stroke="#8fa8c0" stroke-width="1" stroke-dasharray="2 4"></line>
+            <text x="360" y="20" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1" fill="#7d92a8">API PROCESS KILLED &amp; RESTARTED HERE</text>
+
+            <line x1="170" y1="126" x2="300" y2="196" stroke="#496178" stroke-width="1.2" marker-end="url(#csArrow)"></line>
+            <text x="185" y="160" font-size="11.5" fill="#496178">remember_fact(key, value)</text>
+
+            <line x1="555" y1="126" x2="425" y2="196" stroke="#496178" stroke-width="1.2" marker-end="url(#csArrow)"></line>
+            <text x="460" y="160" font-size="11.5" fill="#496178">recall_facts()</text>
+
+            <rect x="260" y="200" width="200" height="66" rx="6" fill="#2b72e6" stroke="#2b72e6" stroke-width="1.4"></rect>
+            <text x="360" y="226" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.2" fill="#ffffff">WRITE GATE</text>
+            <text x="360" y="246" text-anchor="middle" font-size="11.5" fill="#e2edfd">key &#8712; allow-list ?</text>
+            <text x="360" y="260" text-anchor="middle" font-size="10.5" fill="#bcd5f8">else reject &middot; HTTP 400</text>
+
+            <line x1="360" y1="266" x2="360" y2="316" stroke="#496178" stroke-width="1.2" marker-end="url(#csArrow)"></line>
+
+            <rect x="210" y="320" width="300" height="66" rx="6" fill="#091a30" stroke="#091a30" stroke-width="1.6"></rect>
+            <text x="360" y="346" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.2" fill="#8de5e5">MEMORY STORE</text>
+            <text x="360" y="364" text-anchor="middle" font-size="11.5" fill="#cbddec">memory_store.json on disk</text>
+            <text x="360" y="380" text-anchor="middle" font-size="10.5" fill="#9fb6cc">unaffected by the restart above</text>
+          </svg>
+          <figcaption><span class="fig-label">Fig. 1</span>Both sessions are ephemeral and share no history. The gate sits at the store&rsquo;s boundary, not the agent&rsquo;s, so it holds even across the process restart shown above.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="verification">
+      <div class="read">
+        <div class="section-label">Verification</div>
+        <h2>&ldquo;Cross-session&rdquo; is easy to fake with a long-lived chat thread.</h2>
+        <p class="body" style="font-size:1.08rem; margin-bottom:2rem;">The actual bar: kill the process in between.</p>
+
+        <ol class="timeline">
+          <li>
+            <div class="step-label">Step 1 &mdash; Write</div>
+            <p>Session A states a preference in passing while asking an unrelated question. The agent calls <code>remember_fact</code> three times &mdash; name, language, topic.</p>
+          </li>
+          <li>
+            <div class="step-label">Step 2 &mdash; Kill</div>
+            <p>The API process is terminated outright, not just the chat thread. Confirmed dead &mdash; port unreachable, process list clean.</p>
+          </li>
+          <li>
+            <div class="step-label">Step 3 &mdash; Restart cold</div>
+            <p>A brand-new process is started from scratch. No writes have happened in it. It has never seen Session A.</p>
+          </li>
+          <li class="verified">
+            <div class="step-label verified-label">Step 4 &mdash; Recall &#10003;</div>
+            <p>Session B &mdash; a different, fresh agent session &mdash; asks &ldquo;what&rsquo;s my name?&rdquo; The agent calls <code>recall_facts</code> and answers correctly.</p>
+            <p class="detail">Nothing was re-stated. The only place that fact could have come from is the file on disk.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="wide exhibits">
+        <figure class="exhibit">
+          <img src="assets/images/exhibit-a-write.jpg" alt="The capstone FAQ agent interface showing the durable memory store read directly from GET /memory with preferred_name Greg, preferred_language English, and last_topic Dream Team culture memo" />
+          <figcaption><span class="fig-label">Exhibit A</span>Session A&rsquo;s write, confirmed live against the deployed store &mdash; not a local mock.</figcaption>
+        </figure>
+        <figure class="exhibit">
+          <img src="assets/images/exhibit-b-trace.jpg" alt="The full tool-call trace for Session A showing recall_facts returning empty followed by three gated remember_fact writes" />
+          <figcaption><span class="fig-label">Exhibit B</span>The full tool-call trace for Session A: <code>recall_facts</code> comes back empty, then three gated <code>remember_fact</code> writes.</figcaption>
+        </figure>
+        <figure class="exhibit">
+          <img src="assets/images/exhibit-c-recall.jpg" alt="Session B after the process restart recalling the stored name correctly with nothing re-stated" />
+          <figcaption><span class="fig-label">Exhibit C</span>Session B &mdash; after the process restart &mdash; recalling correctly with nothing re-stated.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="on-white">
+      <div class="read">
+        <div class="section-label">Takeaway</div>
+        <blockquote>The sellable skill isn&rsquo;t the JSON file. It&rsquo;s knowing which three facts actually matter, proving they survive a restart, and writing down the one thing that doesn&rsquo;t work yet.</blockquote>
+        <p class="body">The pattern here &mdash; a named allow-list instead of &ldquo;remember everything,&rdquo; enforcement at two independent layers, and a verification step that would actually catch a false claim &mdash; is the reusable part. The storage backend underneath is incidental and gets swapped for whatever a given system already runs.</p>
+        <p class="body" style="margin-bottom:0;">Paired with the same defense-in-depth approach applied earlier against prompt injection on this agent, it adds up to a specific, narrow offering: <strong style="color:var(--navy);">auditing and hardening agents that already exist</strong> &mdash; giving them memory that doesn&rsquo;t leak or bloat, and closing the gaps between what a system prompt promises and what actually gets enforced.</p>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="read">
+        <div class="section-label" style="color:#8de5e5">Status at publish</div>
+        <h2>Verified live against a real process restart, not simulated.</h2>
+        <p>Open to agent architecture and hardening engagements &mdash; giving existing agents memory that doesn&rsquo;t leak or bloat.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:greg@gibson-ai.com?subject=Agent%20memory%20case%20study">Email Greg Gibson</a>
+          <a class="btn btn-secondary" href="index.html#case-studies">Back to gibson-ai.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Gibson AI &middot; Business AI implementation for practical, repeatable work. &middot; <a href="field-notes.html">Field Notes: Building with AI</a></div>
+  </footer>
+</body>
+</html>

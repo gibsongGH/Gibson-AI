@@ -107,6 +107,29 @@
       .nav-links a:not(.nav-cta) { display: none; }
       section { padding: 4rem 0; }
     }
+
+    /* --- Case studies --- */
+    .case-studies { background: var(--white); }
+    .case-feature { display: grid; grid-template-columns: 1.15fr .85fr; gap: 0; background: var(--white); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+    .case-body { padding: 2.2rem; }
+    .case-body h3 { font-size: 1.85rem; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: .75rem; }
+    .case-body p { color: var(--ink-soft); }
+    .case-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .tag-verify { color: #0d5f5f; background: #dff5f5; }
+    .case-list { list-style: none; padding: 0; margin: 0 0 1.6rem; display: grid; gap: .55rem; }
+    .case-list li { position: relative; padding-left: 1.65rem; color: var(--ink-soft); }
+    .case-list li::before { content: "\2713"; position: absolute; left: 0; color: var(--aqua); font-weight: 900; }
+    .case-schema { background: var(--navy); color: var(--white); padding: 2.2rem; display: flex; flex-direction: column; }
+    .case-schema .schema-rows { display: grid; gap: .7rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem; }
+    .case-schema .schema-rows > div { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .7rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .case-schema .schema-rows > div:last-child { border-bottom: 0; padding-bottom: 0; }
+    .case-schema .k { color: var(--aqua); }
+    .case-schema .v { color: #cbddec; }
+    .case-schema .schema-note { color: #9fb6cc; font-size: .88rem; margin: 1.4rem 0 0; }
+
+    @media (max-width: 900px) {
+      .case-feature { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -116,6 +139,7 @@
       <div class="nav-links">
         <a href="#services">Services</a>
         <a href="#apps">Live Apps</a>
+        <a href="#case-studies">Case Studies</a>
         <a href="#demo">Demo</a>
         <a href="#approach">Approach</a>
         <a href="#background">Background</a>
@@ -204,6 +228,43 @@
       </div>
     </section>
 
+    <section class="case-studies" id="case-studies">
+      <div class="container">
+        <div class="section-label">Case studies</div>
+        <h2>How the systems are actually built and checked.</h2>
+        <p class="section-intro">A live app shows that something works. A case study shows the decisions behind it—what was deliberately left out, where the constraint is enforced, and what test would have caught a false claim.</p>
+
+        <article class="case-feature">
+          <div class="case-body">
+            <div class="case-tags">
+              <span class="tag">Agent memory</span>
+              <span class="tag tag-verify">Verified live</span>
+            </div>
+            <h3>Teaching an Agent to Remember (Only What It Should)</h3>
+            <p>Adding durable, cross-session memory to a retrieval agent—then killing the server process outright and reading the fact back from a cold start. Three allow-listed keys, enforced at two independent layers.</p>
+            <ul class="case-list">
+              <li>A named allow-list instead of &ldquo;remember everything&rdquo;</li>
+              <li>Rejected at the storage layer, not just in the prompt</li>
+              <li>Proven against a real process restart, not simulated</li>
+            </ul>
+            <div class="cta-row" style="margin-top:0;">
+              <a class="btn btn-primary" href="case-study-agent-memory.html">Read the case study</a>
+              <a class="btn btn-secondary" style="color: var(--ink); border-color: #b9cee3;" href="https://ai-internship-jx6n.onrender.com/memory" target="_blank" rel="noopener noreferrer">Open the live memory store</a>
+            </div>
+          </div>
+          <div class="case-schema">
+            <div class="section-label" style="color:#8de5e5">The entire schema</div>
+            <div class="schema-rows">
+              <div><span class="k">preferred_name</span><span class="v">Greg</span></div>
+              <div><span class="k">preferred_language</span><span class="v">English</span></div>
+              <div><span class="k">last_topic</span><span class="v">culture memo</span></div>
+            </div>
+            <p class="schema-note">Three keys. Any other key is rejected with an HTTP 400 at write time.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="demo" id="demo">
       <div class="container split">
         <div class="demo-panel">
@@ -273,6 +334,6 @@
     </section>
   </main>
 
-  <footer class="footer"><div class="container">© 2026 Gibson AI · Business AI implementation for practical, repeatable work. · <a href="field-notes.html">Field Notes: Building with AI</a></div></footer>
+  <footer class="footer"><div class="container">© 2026 Gibson AI · Business AI implementation for practical, repeatable work. · <a href="case-study-agent-memory.html">Case Study: Agent Memory</a> &middot; <a href="field-notes.html">Field Notes: Building with AI</a></div></footer>
 </body>
 </html>
